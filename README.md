@@ -1,32 +1,22 @@
 redux-tutorial
 =========================
+感谢原作者,不知道这样fork后再修改有没有问题
 
-This repository contains a step by step tutorial to help grasp flux and more specifically [Redux](https://github.com/reactjs/redux).
+侵权什么,麻烦大家告知,我看看怎么改改
 
-The official and very exhaustive Redux documentation is available [here](http://redux.js.org/) and should be your number one source of truth regarding Redux. The present tutorial will only offer you an introduction to flux concepts through Redux use. For further or more detailed info, please refer to the Redux documentation.
+有表述不清楚或者错误的地方,欢迎提出来,我会及时改正
 
-### Prerequisites
-It is required for you to know a bit of ES6 and ES7 (Object Spread) to correctly understand some of the examples given in this repo. Also be aware that this tutorial targets redux 3.0.2 and react-redux 4.0.0.
+
 
 ### Clone the repository
-`git clone https://github.com/happypoulp/redux-tutorial.git`
-
+git clone https://github.com/boogoogle/redux-tutorial.git
 ### Move into repository
 `cd redux-tutorial`
 
 ### Install dependencies
 `npm install`
 
-### Browse the tutorial
+### 执行某个js文件
 
-This tutorial is split into a sequence of javascript files that are intended to be read in order. 
+`npm run example 001_simple-action-creator.js`
 
-Start with the first tutorial: [Introduction](00_introduction.js)
-
-### Run an example
-
-Being real js files, each example can be run to verify that it works as intended or to do your own experiments:
-
-`npm run example 01_simple-action-creator.js`
-
-Enjoy!
