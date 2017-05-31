@@ -1,0 +1,14 @@
+{
+  "name": "reduxexercise",
+  "version": "1.0.0",
+  "description": "一步一步的学习redux,参考自https://github.com/happypoulp/redux-tutorial \t感谢作者,感谢redux社区",
+  "main": "combineReducers.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "redux": "^3.6.0"
+  }
+}
