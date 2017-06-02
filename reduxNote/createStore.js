@@ -22,7 +22,7 @@ export const ActionTypes = {
  * @param {Funcion} [reducer] 一个对象,用来返回下一个状态树,需要传入当前状态树和action
  *
  * @param {any} [preloadedState] 初始状态,可以是各种类型(Function, Object).一般是从服务端拿数据,然后组装而成;或者是还原上一次的用户会话(这句有问题)
- * 如果是用 combineReducers 来作为root reducer方法, 这个初始状态必须是一个对象,并且它的key得和combineReducers的key保持一致
+ * 如果是用 combineReducers 来作为root reducer方法, 这个初始状态必须是一个对象,并且它的形式得和combineReducers的形式保持一致(一般都是hash)
  *
  * @param {Function} [enhancer] store加强器(这名字翻译的),可选参数.你可以通过第三方库来
  * 扩展store的功能--比如middleware,time travel, persistence等等

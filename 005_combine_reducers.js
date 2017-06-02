@@ -38,7 +38,7 @@ var reducer_1 = function (state = {}, action) {
 }
 
 // 这TMD也太多了,我们不可能把所有的action都写在一个reducer里面
-// 因为不同的动作要因为模块,组件,功能的不同二写到不同的reducer里面,解耦,模块化/组件化都不允许我们这么写
+// 因为不同的动作要因为模块,组件,功能的不同而写到不同的reducer里面,解耦,模块化/组件化都不允许我们这么写
 // Redux也认识到了这个情况,所以这里它提供了一个方法,来把我们不同功能的reducer整合起来
 
 var userReducer = function(state = {}, action) {
@@ -97,10 +97,11 @@ var reducer = combineReducers({
 
 
 var store_0 = createStore(reducer)
+// Output:
 // userReducer was called with state {} and action { type: '@@redux/INIT' }
 // itemsReducer was called with state [] and action { type: '@@redux/INIT' }
 
-// 如你所见,每一个reducer都被执行,并且触发了redux内置的action :{ type: '@@redux/INIT'}
+// 如你所见,每一个reducer都被执行,并且触发了redux内置的初始action :{ type: '@@redux/INIT'}
 console.log('store_0 state after initialization:', store_0.getState())
 // Output: store_0 state after initialization: { user: {}, items: [] }
 
