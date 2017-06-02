@@ -28,5 +28,8 @@ var store_1 = createStore(reducer)
 // reducer是一个函数,它接收两个参数(state, action)
 // 很显然,当应用初始化的时候,它的state是没有的,因此是undefined
 
+// 现在应用的处理流程是
+// actionCreator  --> action --> reducer
+
 // 但是当redux初始化了应用状态,即触发了默认的action { type: '@@redux/INIT' }时,应用的状态是什么呢?
 // 让我们来看一下, 请看004_get_state.js

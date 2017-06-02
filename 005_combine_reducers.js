@@ -1,5 +1,8 @@
-// 把reducer"集中整治"
+// combineReducers
+// combine:使结合,联合
 
+
+// 首先,创建几个reducer
 var reducer_0 = function(state = {}, action){
 	console.log("reducer_0接收的state是", state, "; action是", action)
 
@@ -66,16 +69,16 @@ var itemsReducer = function (state = [], action) {
  * 			userReducer的state初始化为一个 对象, 而
  * 			itemsReducer的state初始化为一个 数组
  * 这里这么写的目的仅仅是为了告诉读者:state可以是不同的数据类型!!!
- * 这是很重要的--因为你应该根据不同的需求设计适当的数据结构
+ * 这是很重要的--因为你应该根据不同的需求设计适当的数据结构来作为应用的状态
  *
  *
  * 这里写了两个reducer,他们每人负责整个应用状态(state)的一部分
  * 但是问题来了--createStore只能接收一个reducer 作为参数!!!
  *
  * so?那么怎么把这两个reducer 合并成一个呢?
- * redux怎么知道合并之后的reducer中,应用的不同部分该由谁负责呢?
+ * 在把多个reducer合并之后,我再出发一个action,Redux怎么从里面找出处理当前这个action的哪一个reducer呢
  * combineReducers就是解决上面两个问题的,它接收一个hash(你可以理解为一个JS对象),然后返回一个函数(它本质是一个reducer)
- * 在combineReducers函数执行内部,会调用所有的reducers(他们都是函数),每一个reducer会返回应用状态的一部分
+ * 在combineReducers函数执行内部,会调用所有的reducers(他们都是函数),每一个reducer会返回应用状态的一部分,可以理解为"局部状态(state)"
  * 把每一部分整合成一个总的应用状态
  * 具体内部实现可以看源码,说起来很晕乎,但是代码其实不难.现在让我们用一下
  */

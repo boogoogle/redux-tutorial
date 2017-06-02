@@ -1,18 +1,18 @@
 /**
  * 异步action
  *
- * 前面我们看到了怎样去dispatch action ,斌天气知道了这些actions通过reducers,改变了应用的状态
+ * 前面我们看到了怎样去发起一个行为(dispatch action) ,并且知道了这些actions通过对应的reducers,改变了应用的状态
  *
- * 但是到此为止,我们只是考虑了同步的action,确切的书,actionCreators是同步创建action的
- * 当我们出发一个action,这些actionCreators 立即返回一个数据
+ * 但是到此为止,我们只是考虑了同步的action,确切的说,actionCreators是同步创建action的
+ * 当我们发起一个动作(action),这些actionCreators 是立即返回对应数据的
  *
- * 现在考虑一种异步的场景,假设有一条消息
+ * 现在考虑一种异步的场景,假设
  * 	1. 用户点击了一个按钮,按钮上写着"Say hi 2 seconds"
  * 	2. 点击按钮A,两秒后消息显示为hi
  * 	3. 两秒后,更新view为Hi
  *
  * 很明显这条消息是我们应用状态(state)的一部分,所以我们必须把它存在Redux的store里
- * 但是我们希望: 在actionCreator被调用两秒过后,再把这条消息保存到storey
+ * 但是我们希望: 在actionCreator被调用两秒过后,再把这条消息保存到store里
  * 因为很有可能,在应用的状态(state)改变的时候,有一些view是会跟着马上改变的.我们希望两秒后更新视图(view)
  * 
  * 

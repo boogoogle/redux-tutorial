@@ -1,4 +1,7 @@
-// 读取状态
+// getState -- 读取应用状态
+
+
+
 import { createStore } from 'redux'
 
 var reducer_0 = function(state, action) {
@@ -19,6 +22,7 @@ console.log("redux初始化应用状态之后,store_0的状态(state)是", store
 // 现在,我们写一个新的reducer,如果传入的state是undefined,让它返回一些东西
 var reducer_1 = function(state, action) {
 	console.log('reducer_1接受到的state是:', state, '; action是', action)
+
 	if (typeof state === 'undefined') {
 		return {}
 	}
@@ -27,10 +31,12 @@ var reducer_1 = function(state, action) {
 
 var store_1 = createStore(reducer_1);
 // reducer_1接受到的state是: undefined ; action是 { type: '@@redux/INIT' }
+// 这里为什么会打印出这条消息??这是因为createStore(reducer)执行的时候,内部的reducer都被执行了一次(之前说过了,再啰嗦一遍)
+
 console.log('redux初始化之后store_1的状态(state)是', store_1.getState())
 // redux初始化应用状态之后, store_1的状态(state)是 {}
 
-// 正如所期望的那样, 这里返回的是我们reducer_1的返回值
+// 正如所期望的那样, 在redux初始化应用状态之后,起状态是空对象{}, 也就是reducer_1的返回值
 
 
 // 通过es6,我们可以可以写的更清楚一点
@@ -45,8 +51,13 @@ var store_2 = createStore(reducer_2);
 console.log('redux初始化之后store_2的状态(state)是', store_2.getState())
 // Output: redux初始化之后store_2的状态(state)是 {}
 
+// 现在应用的处理流程是
+// actionCreator  --> action --> reducer
 
-// 现在,让我们写一个
+
+// 注意到上面我们写了两个reducer,每一个reducer都会生成一个store
+// 而Redux要求,一个应用应该只有一个store,那么如果需要处理不同的action,就必定需要多个reducer,应该怎么办呢?
+// 请看005_conbine_reducers.js
 
 
 

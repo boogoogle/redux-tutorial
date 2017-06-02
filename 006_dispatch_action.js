@@ -74,11 +74,9 @@ store_0.dispatch(setNameActionCreater('小明'))
 console.log("在store_0 触发了上面的action之后,,store_0的状态是", store_0.getState())
 // Output: 在store_0 触发了上面的action之后,,store_0的状态是 { user: { name: '小明' }, items: [] }
 
-
-// 目前为止,应用的护具流程是:
-// ActionCreator -> Action -> dispatcher -> reducer
-
+// 目前为止应用的运行流程是
+// actionCreator 产生一个 action --> store.dispatch发出通知,我这个动作(action)发生了哈--> reducer处理对应的action
 
 // 以上,我们已经用redux完成了一个简单的应用,但是很多情况下,
-// 我们可能需要触发一个异步事件(比如ajax),然后再去触发一个action
+// 我们可能需要触发一个异步事件(比如ajax),然后再去触发一个action,然后用对应的reducer来处理这个对应的action,然后...
 // 请看下一节  007_dispatch_async_action.js
