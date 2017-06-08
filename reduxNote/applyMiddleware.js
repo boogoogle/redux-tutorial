@@ -1,5 +1,12 @@
 /**
- * 增强store功能
+ * 增强store功能 -- middleware
+ * 假设我们输入的数据是 resource,  我们使用三个中间件 f, g, h依次处理该数据
+ * 	则数据流向是    
+ * 		let level1 = h(resource)
+ * 		let level2 = h(level1)
+ * 		let level3 = h(level2)
+ *
+ * 		level3就是我们想要的数据
  */
 
 
@@ -17,3 +24,23 @@ function compose(...funcs) {
 
     return funcs.reduce((a, b) => (...args) => a(b(...args)))
 }
+
+
+function f(e){
+	console.log('ffff' + e + 'ffff')
+}
+function g(e){
+	console.log('gggg' + e + 'gggg')
+}
+function h(e){
+	console.log('hhhh{' + e + '}hhhh')
+}
+let funcs = [f, g, h]
+
+let res = funcs.reduce(function(acc, val){
+	console.log(111111)
+	return function(...args){
+		acc(val(...args))
+	}
+})
+res('111')
