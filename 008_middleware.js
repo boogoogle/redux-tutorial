@@ -33,7 +33,7 @@ var anyMiddleware = function ({dispatch, getState}) {
 
 /**
  * 如你所见,一个中间件是一个三层函数,他们会被依次执行
- * 1. 第一层提供了dispatch和getState方法给第二层的方法调用,你可能需要在你的middleware或者actionCreator中读取当前的状态
+ * 1. 第一层提供了dispatch和getState方法给第二层的函数调用,你可能需要在你的middleware或者actionCreator中读取当前的状态
  * 2. 第二层函数提供了一个next方法,通过这个next你可以把转换后的数据传给下一个middleware或者是直接给Redux(这样Redux就可以出发执行reducers了)
  * 3. 第三层函数提供了你从上一个middleware或者diapatch接收到action,你可以把这个action传递给下一个middleware,或者以转换成其他的方式传递
  */

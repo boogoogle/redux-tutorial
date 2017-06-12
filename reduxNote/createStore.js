@@ -144,6 +144,7 @@ export default function createStore(reducer, preloadedState, enhancer) {
 			isDispatching = false
 		}
 
+		// 通过subscribe订阅的listener,每次dispatch都会触发他们的执行
 		const listeners = currentListeners = nextListeners
 		for(let i = 0; i < listeners.length; i++) {
 			const listener = listeners[i]
@@ -168,6 +169,13 @@ export default function createStore(reducer, preloadedState, enhancer) {
 	   dispatch({ type: ActionTypes.INIT })
 	 }
 
+	 dispatch({ type: ActionTypes.INIT})
 
-
+	 return {
+	     dispatch,
+	     subscribe,
+	     getState,
+	     replaceReducer,
+	     [$$observable]: observable
+	   }
 }

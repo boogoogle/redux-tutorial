@@ -13,7 +13,7 @@
 /**
  * 从右到左依次执行函数,最右边的函数可以有多个参数
  * @param funcs  要处理的函数
- * @returns {Function}  返回一个函数,例如: compose(f, g, h)表示(...args) => f(g(h(...args)))
+ * @returns {Function}  返回一个函数,例如: compose(f, g, h)(...args)表示(...args) => f(g(h(...args)))
  */
 function compose(...funcs) {
     if ( funcs.length == 0 )
@@ -27,7 +27,9 @@ function compose(...funcs) {
 
 
 function f(e){
-	console.log('ffff' + e + 'ffff')
+	let r = 'ffff' + e + 'ffff'
+	console.log(r)
+	return r
 }
 function g(e){
 	console.log('gggg' + e + 'gggg')
