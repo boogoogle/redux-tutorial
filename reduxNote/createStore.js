@@ -139,7 +139,10 @@ export default function createStore(reducer, preloadedState, enhancer) {
 
 		try {
 			isDispatching = true
-			currentState = currentReducer(currentState, action)
+			currentState = currentReducer(currentState, action)  
+				// 执行传入的reducer(前面被赋值给了currentReducer)
+				// 更新currentStore
+
 		} finally {
 			isDispatching = false
 		}
@@ -176,6 +179,6 @@ export default function createStore(reducer, preloadedState, enhancer) {
 	     subscribe,
 	     getState,
 	     replaceReducer,
-	     [$$observable]: observable
+	     [$$observable]: observable // 这个是用来执行中间件的,相关代码未写(因为看不懂),详情请见https://github.com/reactjs/redux/blob/master/src/createStore.js
 	   }
 }

@@ -55,7 +55,7 @@ store_0.dispatch(sayActionCreator_1('Hi'))
 var sayActionCreator_1 = function(message) {
 	
 	// 这里有一个技巧,除了直接返回一个action,我们的actionReducer还可以返回一个函数,
-	// 这个函数在之后可以dispatch一个action
+	// 在这个函数中,可以dispatch一个action
 	// 但是如果我们想要让这个函数拥有dispatch action的能力,我们需要传入dispatch这个参数
 	return function(dispatch) {
 		setTimeout(function(){

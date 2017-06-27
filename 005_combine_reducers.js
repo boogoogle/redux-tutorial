@@ -9,7 +9,7 @@ var reducer_0 = function(state = {}, action){
 	switch(action.type) {
 		case 'SAY':
 			return {
-				...state, // 注意这是es6的写法 三个点...展开对象
+				...state, // 注意这是es6的写法 三个点...展开数组
 				message: action.value
 			}
 		default:  // 主要:如果用了switch语句,一定要用default条件返回传入的state哦

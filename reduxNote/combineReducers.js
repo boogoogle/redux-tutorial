@@ -11,31 +11,68 @@
  */
 export default function combineReducers(reducers) {
 	const reducerKeys = Object.keys(reducers)
-	const finalReducers = {}
+	const finalReducers = {} // 为啥这里是复数?  
+	                         // 先对reducers对象进行过滤,排除掉非法的reducer,把过滤后reducer键值对存入finalReducers
 	for(let i=0; i<reducerKeys.length; i++) {
-		const key = reducersKeys[i]
+		const key = reducerKeys[i]
 
 		if (typeof reducers[key] === 'undefined') {
-			console.log('No reducer provided for key "{$key}')
+			console.log(`No reducer provided for key ${key}`)
 		}
 
 		if (typeof reducers[key] === 'function') {
 			finalReducers[key] = reducers[key]
 		}
 	}
+	console.log("finalReducers:\n", finalReducers)
 	const finalReducerKeys = Object.keys(finalReducers)
 
-	return function combination(state={}, action) {
+	return function combination(state={}, action) {  // 这里实际上遍历执行了所有传入combineReducers中的reducer
+													 // 所以要求我们在写reducer的时候,如果没有action发生,或者发生的action没有被定义,必须要返回一个传入的state(switch 的 default语句)
+													 // 以保证每次只改变一个branch
+													 // 其实redux在combineReducers函数里面对各种情况作了判断,如果你写了错误的action或者reducer(比如没有返回传入的state)都会报错
 		let hasChanged = false
 		for(let i=0; i<finalReducerKeys.length; i++) {
 			const key = finalReducerKeys[i]
 			const reducer = finalReducers[key]
-			const previousStateForKey = state[key]
-			const nextStateForKey = reducer(previousStateForKey, action)
+			const previousStateForKey = state[key] // 取到当前key对应的state branch
+			const nextStateForKey = reducer(previousStateForKey, action)  // 执行对应的reducer
 
-			nextState[key] = nextStateForKey	
-			hasChanged = hasChanged || nextStateForKey !== previousStateForKey
+			nextState[key] = nextStateForKey	   // 更新当前key 对应的state branch 
+			hasChanged = hasChanged || nextStateForKey !== previousStateForKey  // 判断是否需要更新state
 		}
 		return hasChanged ? nextState : state
 	}
 }
+
+
+/*
+	combineReducer使用:
+
+ var userReducer = function(state = {}, action) {
+	console.log('userReducer was called with state', state, 'and action', action)
+
+    switch (action.type) {
+        // etc.
+        default:c
+            return state;
+    }
+}
+
+var itemsReducer = function (state = [], action) {
+    console.log('itemsReducer was called with state', state, 'and action', action)
+
+    switch (action.type) {
+        // etc.
+        default:
+            return state;
+    }
+}
+
+
+ var reducer = combineReducers({
+ 	user: userReducer,   // 把state整理成两个branch,分别是 state.user ,  state.items
+ 	items: itemsReducer  // 检测到某一个reducer发生,执行所有的reducer,但是只会更新对应的branch
+ })
+
+  */

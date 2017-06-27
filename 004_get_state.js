@@ -31,7 +31,8 @@ var reducer_1 = function(state, action) {
 
 var store_1 = createStore(reducer_1);
 // reducer_1接受到的state是: undefined ; action是 { type: '@@redux/INIT' }
-// 这里为什么会打印出这条消息??这是因为createStore(reducer)执行的时候,内部的reducer都被执行了一次(之前说过了,再啰嗦一遍)
+// 这里为什么会打印出这条消息??这是因为createStore(reducer)执行的时候,传入的reducer被执行了一次(之前说过了,再啰嗦一遍)
+// 如果传入的是 combineReducer({key: reducer}, {key2, recucer2}) 函数的执行结果的话,那么reducer, reducer2都会被执行一遍
 
 console.log('redux初始化之后store_1的状态(state)是', store_1.getState())
 // redux初始化应用状态之后, store_1的状态(state)是 {}
