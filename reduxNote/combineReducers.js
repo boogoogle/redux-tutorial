@@ -72,7 +72,32 @@ var itemsReducer = function (state = [], action) {
 
  var reducer = combineReducers({
  	user: userReducer,   // 把state整理成两个branch,分别是 state.user ,  state.items
- 	items: itemsReducer  // 检测到某一个reducer发生,执行所有的reducer,但是只会更新对应的branch
+ 	items: itemsReducer  // 检测到某一个action发生,执行所有的reducer,但是只会更新对应的branch
  })
 
-  */
+ // 这时候打印reducer你会看到
+ reducer = function(state={}, action) { // 这就是一个简单的reducer
+ 	// 第73行代码,也可以把传入的对象拿出来(这正是第13~28行代码做的)
+ 	let reducerObj = {
+ 		user: userReducer,
+ 		items: itemsReducer
+ 	}
+ 	let keys = Object.keys(reducerObj)
+ 	let nextState = {} // 暂时用来保存app的下一个状态
+
+ 	keys.forEach((item) => {          // 这里只拿 item == 'user' 的情况距离
+ 		let preState4Key = state[key] // 读取user对应的state branch,即 state.user
+ 		let reducer4Key = reducerObj[key]  // 通过这里的key,拿到对应的reducer,执行后得到最新的state.user
+ 		let nextState4Key = reducer4Key(preState4Key, action) // 这里把对应的state branch拿出来,加上action,一起让对应的reducer处理
+
+ 		nextState[key] = nextState4Key == preState4Key ? preState4Key : nextState4Key // 更新总的state中,当前key对应的branch
+ 		// 这里判断了 preState4Key 和 nextState4Key
+ 		// 如果传入的action是针对items的,也就是说在处理user的action中并没有定义这种类型
+ 		// 那么 preState4Key == nextState4Key
+ 		// 这个时候我们同样为nextState[key]赋值,因为这是在JS中的,React会把这个nextState和state比较,如果没有改变,那么也就不会更新dom
+ 	});
+ }
+
+ */
+
+  
