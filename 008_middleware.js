@@ -44,11 +44,11 @@ var anyMiddleware = function ({dispatch, getState}) {
  */
 
 var thunkMiddleware = function({dispatch, getState}) {
-	console.log('进入thunkMiddleware')
+	// console.log('进入thunkMiddleware')
 	return function(next) {
-		console.log('next动作是', next)//Output: 因为这里只有一个middleware,是 function dispatch(action){...}
+		// console.log('next动作是', next)//Output: 因为这里只有一个middleware,是 function dispatch(action){...}
 		return function(action) {
-			console.log("触发action", action) // Output: function(dispatch){setTi....)
+			// console.log("触发action", action) // Output: function(dispatch){setTi....)
 			return typeof action == 'function' ?
 				action(dispatch, getState) :
 				next(action)
@@ -65,7 +65,7 @@ var thunkMiddleware = function({dispatch, getState}) {
 // 让我们看看,怎样在Redux里面使用middleware
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 
-const finalCreateStore = applyMiddleware(thunkMiddleware)(createStore)
+// const finalCreateStore = applyMiddleware(thunkMiddleware)(createStore)
 // 如果有多个middleware,就写 applyMiddleware(middleware1, middleware2, ...)(createStore)
 
 var reducer = combineReducers({
@@ -83,13 +83,14 @@ var reducer = combineReducers({
 	}
 })
 
-const store_0 = finalCreateStore(reducer)
+// const store_0 = finalCreateStore(reducer)
 
-
+console.log('>>>>>>>>>>>>>>', finalCreateStore , '<<<<<<<<<<<<')
 // 现在看一个异步的action
 
 var asyncSayActionCreator_1 = function(message){
 	return function (dispatch) {
+		console.log('我拿到了dispatch', new Date())
 		setTimeout(function(){
 			console.log(new Date(), 'Dispatch action now')
 			dispatch({
@@ -99,14 +100,14 @@ var asyncSayActionCreator_1 = function(message){
 		}, 2000)
 	}
 }
-console.log('\n', new Date(), "Running out async action creator: ", '\n')
-store_0.dispatch(asyncSayActionCreator_1('我是异步的哦'))
+// console.log('\n', new Date(), "Running out async action creator: ", '\n')
+// store_0.dispatch(asyncSayActionCreator_1('我是异步的哦'))
 // 2017-05-29T04:41:24.954Z Running out async action creator:
 // 
 // 2017-05-29T04:41:26.959Z 'Dispatch action now'
 // speaker was called with state {} and action { type: 'SAY', message: '我是异步的哦' }
 
-// 如上,在actionCreator运行两秒之后, 触发了异步的action,这个异步action的作用是两秒后把message更新
+// 如上,在actionCreator运行两秒之后, 触发了异步的action,这个异步action的作用是两秒后更新message
 
 /**
  * 目前为止我们学习到了:
@@ -117,6 +118,73 @@ store_0.dispatch(asyncSayActionCreator_1('我是异步的哦'))
  * 但是还有一个问题是,当state变化时,怎么监听到其变化并作出应有的反应
  * 请看 009_state_subscriber.js
  */
+
+
+/* 分析分析 */
+
+const finalCreateStore = applyMiddleware(thunkMiddleware)(createStore)
+/* finalCreateStore 函数体如下
+	(reducer, preloadedState, enhancer) => {
+	    const store = createStore(reducer, preloadedState, enhancer)
+	    let dispatch = store.dispatch
+	    let chain = []
+
+	    const middlewareAPI = {
+	      getState: store.getState,
+	      dispatch: (action) => dispatch(action)
+	    }
+	    chain = middlewares.map(middleware => middleware(middlewareAPI))
+	    // 假设这里只有一个中间件,即 middlewares = [onlyMiddleware]
+	    // chain = [onlyMiddleware(middlewareAPI)]
+	    dispatch = compose(...chain)(store.dispatch)
+
+	    return {
+	      ...store,
+	      dispatch
+	    } // 复制之前store的方法,并且更新store.dispatch方法
+	  }
+*/
+const store_0 = finalCreateStore(reducer)
+/* store_0 还是一个正常的store对象 
+           但是它的dispatch经过finalCreateStore改变了
+
+store_0 = {
+	...store, // 这个store是在applyMiddleware函数执行内部形成的
+	dispatch  // 这个dispatch是经过中间件处理之后的dispatch
+	           打印store_0.dispatch 可得到: 
+
+	          	 function (action) {
+					console.log("触发action", action); // Output: function(dispatch){setTi....)
+					return typeof action == 'function' ? action(dispatch, getState) : next(action);
+				 }
+
+	           
+
+          // 可见,现在的dispatch 是中间件里面最里面一层的返回值(因为这里的传入的action实际上是一个function)
+}
+*/
+
+function createAsyncFunc(){
+	return function(){
+		setTimeout(() => {
+			console.log('等了我两秒钟啊')
+		}, 2000)
+	}
+}
+store_0.dispatch(createAsyncFunc())
+// dispatch一个异步方法, 假设createAsyncFunc 返回的函数叫做fn, 即
+// fn == function(){
+// 		setTimeout(() => {
+// 			console.log('等了我两秒钟啊')
+// 		}, 2000)
+// 	}
+// store_0.dispatch(createAsyncFunc()) 返回 fn(),即fn函数的<<<执行结果>>>
+
+
+
+
+
+
 
 
 
