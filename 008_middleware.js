@@ -1,5 +1,5 @@
 /**
- * 008_middleware中间件
+ * 008_middleware中间件 ,本篇结合 redux 的 applyMiddleware一起饮用更佳
  *
  * 上一节我们的异步action报错了,然后说需要用middleware来解决,那么middleware是什么呢?
  *
@@ -172,7 +172,7 @@ function createAsyncFunc(){
 	}
 }
 store_0.dispatch(createAsyncFunc())
-// dispatch一个异步方法, 假设createAsyncFunc 返回的函数叫做fn, 即
+// dispatch一个异步方法, 假设createAsyncFunc 返回的函数叫做fn, 即有
 // fn == function(){
 // 		setTimeout(() => {
 // 			console.log('等了我两秒钟啊')
