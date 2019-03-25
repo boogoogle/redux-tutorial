@@ -1,5 +1,6 @@
-// getState -- 读取应用状态
-
+/**
+ * getState -- 读取应用状态
+ */
 
 
 import { createStore } from 'redux'
